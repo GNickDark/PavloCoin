@@ -65,7 +65,7 @@ class SecureWebApp:
         # Calculate secret key
         secret_key = hmac.new(
             key=b"WebAppData",
-            msg=self.bot_token.encode(),
+            msg=self.secret_key,
             digestmod=hashlib.sha256
         ).digest()
         
@@ -245,7 +245,7 @@ def main():
     dp["base_url"] = os.getenv("WEB_APP_URL")
     
     # Initialize secure web app
-    secure_app = SecureWebApp(TOKEN)
+    secure_app = SecureWebApp(bot_token=str(TOKEN))
     
     app = Application(middlewares=[rate_limit_middleware, security_middleware])
     app["bot"] = bot
